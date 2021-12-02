@@ -19,7 +19,7 @@ origins = [
     "http://localhost:8000"
 ]
 
-app = ThingsAPI()
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
