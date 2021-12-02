@@ -24,3 +24,11 @@ alembic upgrade head
 ```
 
 This can be verified by logging in `adminer` on http://localhost:8080 and selecting the Postgres database driver.
+
+## Accessing the application
+
+All API calls should be made to http://localhost:8000
+
+## APIs documentation
+
+The list of all APIs is available at http://locahost:8000/docs or http://localhost:8000/redoc depending on your documentation format choice.
