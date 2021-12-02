@@ -2,12 +2,19 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
+#
+# Locations
+#
+
 class LocationBase(BaseModel):
-    name: str
+    name: Optional[str] = "-"
     lat: float
     lon: float
 
 class LocationCreate(LocationBase):
+    pass
+
+class LocationUpdate(LocationBase):
     pass
 
 class LocationOut(LocationBase):
