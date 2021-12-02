@@ -1,16 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# from . import models
-# from .database import engine
-# from .routers import posts, users, auth, votes
-# from .config import settings
-
-
-# Needed if Alembic is not used to create / upgrade the structure
-# models.Base.metadata.create_all(bind=engine)
-
-
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
