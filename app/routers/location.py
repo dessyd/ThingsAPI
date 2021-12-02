@@ -2,7 +2,7 @@ from typing import List, Optional
 from sqlalchemy.sql.roles import GroupByRole
 
 from starlette.status import HTTP_403_FORBIDDEN
-from .. import schema
+from .. import schema, model
 from fastapi import  Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -13,7 +13,9 @@ router = APIRouter(
     tags=['Locations']
 )
 
-@router.get("/")
+@router.get("/", response_model=List[model.LocationOut])
+# @router.get("/")
+
 def get_locations(db: Session = Depends(get_db),
                   limit: int = 10, skip: int = 0, search: Optional[str] = ""):
     
