@@ -15,8 +15,8 @@ class Thing(Base):
     __table_args__ = {
         'comment': 'one record per deployed thing'
     }
-    id = Column(Integer, primary_key=True, nullable=False)
-    physical_id = Column(String, nullable=False, unique=True)
+    id = Column(Integer, primary_key=True, nullable=False, comment='used internally only')
+    physical_id = Column(String, nullable=False, unique=True, comment='usually the MAC address')
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     board_id = Column(Integer, ForeignKey("boards.id", ondelete="CASCADE"), nullable=False)
@@ -47,7 +47,7 @@ class Location(Base):
 class Sensor(Base):
     __tablename__ = "sensors"
     __table_args__ = {
-        'comment': 'one record per sensor intalled on each things'
+        'comment': 'one record per sensor intalled on each thing'
     }
     id = Column(Integer, primary_key=True, nullable=False)
     enabled = Column(Boolean, server_default='TRUE', nullable=False)
