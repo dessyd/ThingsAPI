@@ -12,6 +12,9 @@ from .database import Base
 # and pysicallly located at Location
 class Thing(Base):
     __tablename__ = "things"
+    __table_args__ = {
+        'comment': 'one record per deployed thing'
+    }
     id = Column(Integer, primary_key=True, nullable=False)
     physical_id = Column(String, nullable=False, unique=True)
     created_at = Column(TIMESTAMP(timezone=True),
@@ -21,14 +24,19 @@ class Thing(Base):
     location_id = Column(Integer, ForeignKey("locations.id", ondelete="CASCADE"),nullable=False)
     location = relationship("Location")
 
-# A Board is the generic description
 class Board(Base):
     __tablename__ = "boards"
+    __table_args__ = {
+        'comment': 'generic board description'
+    }
     id = Column(Integer, primary_key=True, nullable=False)   
     name = Column(String, nullable=True)
 
 class Location(Base):
     __tablename__ = "locations"
+    __table_args__ = {
+        'comment': 'Describe a given location were things are'
+    }
     id = Column(Integer, primary_key=True, nullable=False)  
     name = Column(String, nullable=True)
     lat = Column(Float, nullable=False)
@@ -38,6 +46,9 @@ class Location(Base):
     
 class Sensor(Base):
     __tablename__ = "sensors"
+    __table_args__ = {
+        'comment': 'one record per sensor intalled on each things'
+    }
     id = Column(Integer, primary_key=True, nullable=False)
     enabled = Column(Boolean, server_default='TRUE', nullable=False)
     board_id = Column(Integer, ForeignKey("boards.id", ondelete="CASCADE"), nullable=False)  
@@ -47,5 +58,8 @@ class Sensor(Base):
 
 class SensorType(Base):
     __tablename__ = "sensortypes"
+    __table_args__ = {
+        'comment': 'Sensor description'
+    }
     id = Column(Integer, primary_key=True, nullable=False)
     type = Column(String, nullable=False)
