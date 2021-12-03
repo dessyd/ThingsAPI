@@ -76,12 +76,12 @@ def update_location(id: int, location: models.LocationUpdate , db: Session = Dep
                             detail=f"Location with id: {id} does not exeist")
     
     #
-    # Should update timestamp
+    # Update timestamp
     #
-    # using now() to get current time
-    current_time = datetime.datetime.now()      
+    location_dict = location.dict()
+    location_dict['created_at'] = datetime.datetime.now()
 
-    location_query.update(location.dict(), synchronize_session=False)
+    location_query.update(location_dict, synchronize_session=False)
     db.commit()
 
     # return location.first()
