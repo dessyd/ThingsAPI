@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import location
+from .routers import locations
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(location.router)
+app.include_router(locations.router)
 # app.include_router(users.router)
 # app.include_router(auth.router)
 # app.include_router(votes.router)

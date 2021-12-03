@@ -1,7 +1,5 @@
 from typing import List, Optional
 from sqlalchemy.sql.roles import GroupByRole
-
-from starlette.status import HTTP_403_FORBIDDEN
 from .. import models, schemas
 from fastapi import  Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
@@ -46,3 +44,38 @@ def create_location(location: models.LocationCreate, db: Session = Depends(get_d
     db.refresh(new_location)
 
     return new_location
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(id: int, db: Session = Depends(get_db)):
+
+    location = db.query(schemas.Location).filter(schemas.Location.id == id)
+    first_location = location.first()
+
+    if first_location == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Location with id: {id} does not exeist")
+
+    location.delete(synchronize_session=False)
+    db.commit()
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+@router.put("/{id}", response_model=models.LocationOut)
+def update_location(id: int, location: models.LocationUpdate , db: Session = Depends(get_db)):
+
+    location_query = db.query(schemas.Location).filter(schemas.Location.id == id)
+    first_location = location_query.first()
+
+    if first_location  == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Location with id: {id} does not exeist")
+    
+    #
+    # Should update timestamp
+    #
+
+    location_query.update(location.dict(), synchronize_session=False)
+    db.commit()
+
+    # return location.first()
+    return first_location
