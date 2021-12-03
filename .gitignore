@@ -130,3 +130,6 @@ dmypy.json
 
 # alembic versions
 alembic/versions/
+
+# My stuff
+test.py
