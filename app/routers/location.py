@@ -22,7 +22,7 @@ def get_locations(db: Session = Depends(get_db),
 
     return locations
 
-@router.get("/{id}", response_model=List[models.LocationOut])
+@router.get("/{id}", response_model=models.LocationOut)
 # @router.get("/{id}")
 def get_location(id: int, db: Session = Depends(get_db)):
 
@@ -31,6 +31,7 @@ def get_location(id: int, db: Session = Depends(get_db)):
     if not location:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Location with id: {id} is unknown")
+
     return location
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=models.LocationOut)
