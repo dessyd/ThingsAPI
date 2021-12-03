@@ -74,12 +74,10 @@ def update_location(id: int, location: models.LocationUpdate , db: Session = Dep
     if first_location  == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Location with id: {id} does not exeist")
-    
-    #
-    # Update timestamp
-    #
+
     location_dict = location.dict()
-    location_dict['created_at'] = datetime.datetime.now()
+    # Add TS to received update
+    location_dict.update({'created_at': datetime.datetime.now()})
 
     location_query.update(location_dict, synchronize_session=False)
     db.commit()
